@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body{
+            zoom: 0.95;
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            margin: 0;
+        }
+        nav{
+            background: #63a9df;
+            padding: 20px 20px;
+        }
+        nav ul {
+            display: flex;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+            background-color: #63a9df;
+            list-style: none;
+        }
+        nav li {
+            list-style-type: none;
+            display: inline-block;
+            margin: 0 10px;
+        }
+        nav ul img {
+            margin-right: 10px;
+        }
+        nav a {
+            color: #fff;
+            font-size: 18px;
+            background: rgba(255, 255, 255, 0.2);
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+        }
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        main, header{
+            max-width: 960px;
+            margin: 30px auto;
+            padding: 0 10px;
+            color: #333;
+        }
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Login Container */
+        .login-container {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 40px 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .login-container h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .login-container p {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        /* Google Button */
+        .google-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 12px 20px;
+            background: #db4437;
+            color: #fff;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .google-btn img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .google-btn:hover {
+            background: #c63b31;
+        }
+        #below-body {
+            padding: 20px 0px 20px 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 2px solid #f44336;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: none; /* Hidden by default */
+            z-index: 1000;
+        }
+
+        .popup h2 {
+            margin: 0 0 10px;
+            color: #f44336;
+        }
+
+        .popup p {
+            margin: 0 0 20px;
+        }
+
+        .popup .close-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .popup .close-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Overlay to Dim Background */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none; /* Hidden by default */
+            z-index: 999;
+        }
+    </style>
+</head>
+    <body>
+        <nav>
+            <ul>
+                <img src="https://pbs.twimg.com/profile_images/1686037047759323137/MXaEAJQN_400x400.jpg" style="width: 41px; height: 41px; padding-right: 10px;">
+                <li><a href="/">Homepage</a></li>
+            </ul>
+        </nav>
+        <div class="overlay" id="popupOverlay"></div>
+        <div class="popup" id="popup">
+            <h2>Warning</h2>
+            <p id="popupMessage"></p>
+            <button class="close-btn" id="closePopup">Close</button>
+        </div>
+        <div id="below-body">
+            <div class="login-container">
+                <h1>Welcome Back!</h1>
+                <p>Login using your Google account to continue.</p>
+                <a class="google-btn" href="/auth/google">
+                    Continue with Google
+                </a>
+            </div>
+        </div>
+        <script>
+            // Check if a warning message exists and display the pop-up
+            const warningMessage = "<%= warning %>";
+            if (warningMessage) {
+                const popup = document.getElementById('popup');
+                const overlay = document.getElementById('popupOverlay');
+                const popupMessage = document.getElementById('popupMessage');
+                
+                // Set and show the warning message
+                popupMessage.textContent = warningMessage;
+                popup.style.display = 'block';
+                overlay.style.display = 'block';
+    
+                // Close button functionality
+                const closePopup = document.getElementById('closePopup');
+                closePopup.addEventListener('click', () => {
+                    popup.style.display = 'none';
+                    overlay.style.display = 'none';
+                });
+    
+                // Allow closing by clicking the overlay
+                overlay.addEventListener('click', () => {
+                    popup.style.display = 'none';
+                    overlay.style.display = 'none';
+                });
+            }
+        </script>
+    </body>
+</html>

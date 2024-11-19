@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Homepage</title>
+        <style>
+            body{
+                font-family: arial;
+                margin: 0;
+            }
+            nav{
+                background: #63a9df;
+                padding: 20px 20px;
+                display: flex;
+                justify-content: space-between; /* Aligns content on both ends */
+                align-items: center;
+            }
+            nav ul {
+                display: flex;
+                align-items: center;
+                padding: 0;
+                margin: 0;
+                background-color: #63a9df;
+                list-style: none;
+            }
+            nav li {
+                list-style-type: none;
+                display: inline-block;
+                margin: 0 10px;
+            }
+            nav ul img {
+                margin-right: 10px;
+            }
+            nav a {
+                color: #fff;
+                font-size: 18px;
+                background: rgba(255, 255, 255, 0.2);
+                text-decoration: none;
+                padding: 10px;
+                display: block;
+            }
+            main, header{
+                max-width: 960px;
+                margin: 30px auto;
+                padding: 0 10px;
+                color: #333;
+            }
+            main img{
+                width: 40px;
+                margin-right: 10px;
+                position: relative;
+                top: 12px;
+            }
+            main p{
+                display: inline-block;
+            }
+            body {
+                zoom: 0.95;
+                text-align: center;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+            }
+
+            /* .hide {
+                visibility: hidden;
+            } */
+
+            #input {
+                text-align: center;
+                display: block;
+            }
+
+            #buttondiv {
+                position: absolute;
+                right: 0;
+                padding: 20px;
+            }
+
+
+            #calendarTable {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            #calendarTable th, #calendarTable td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: center;
+                line-height: 180%;
+            }
+
+            #calendarTable th {
+                background-color: #f2f2f2;
+            }
+
+            #calendarTable select {
+                width: fit-content;
+                padding: 3px;
+            }
+
+            .profile-section {
+                display: flex;
+                align-items: center;
+                margin-left: auto; /* Push the profile section to the far right */
+                background-color: #f4f4f4;
+                padding: 10px 15px;
+                border-radius: 10px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            #selectiondiv select {
+                width: fit-content;
+                padding: 6px;
+                font-size: 20px;
+                font-weight: bold;
+                text-align: center;
+            }
+
+            .modal-overlay {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+            }
+
+            .title {
+                background-color: #2853C4;
+                color: white;
+                font-weight: bold;
+                text-align: center;
+                font-size: 20px;
+                line-height: 20% !important;
+            }
+
+            #preview-table {
+                background-color: white;
+                width: 80%;
+                border-collapse: collapse;
+            }
+
+            #preview-table th, #preview-table td {
+                border: 1px solid black;
+                padding: 16px;
+                width: 14%;
+                text-align: center;
+                line-height: 140%;
+                word-wrap: break-word;
+            }
+
+            #preview-table th {
+                background-color: #CCDAF6;
+                font-weight: bold;
+                font-size: 15px;
+            }
+            .navbar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between; /* Aligns items across the bar */
+                background-color: #f4f4f4; /* Light background */
+                padding: 10px 15px;
+                border-radius: 10px; /* Rounded corners */
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                margin-left: auto; /* Pushes the navbar content to the far right */
+            }
+
+            /* Profile Container */
+            .profile-container {
+                display: flex;
+                align-items: center;
+                position: relative;
+            }
+
+            /* School Name Styling */
+            .school-name {
+                font-size: 16px;
+                font-weight: bold;
+                color: #333;
+                margin-right: 15px;
+            }
+
+            /* Profile Image Styling */
+            .profile-img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                object-fit: cover;
+                cursor: pointer;
+            }
+
+            /* Username Tooltip */
+            .username-hover {
+                position: relative;
+            }
+
+            .username-tooltip {
+                display: none;
+                position: absolute;
+                top: 32px;
+                left: 50%;
+                transform: translateX(-75%);
+                background-color: black;
+                color: white;
+                padding: 3px 8px;
+                border-radius: 5px;
+                font-size: 10px;
+                white-space: nowrap;
+                z-index: 10;
+            }
+
+            /* Show Tooltip on Hover */
+            .profile-container:hover .username-tooltip {
+                display: block;
+            }
+            .right-section {
+                display: flex;
+                align-items: center;
+                gap: 15px; /* Space between logout and profile rectangle */
+            }
+            
+        </style>
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <img src="https://pbs.twimg.com/profile_images/1686037047759323137/MXaEAJQN_400x400.jpg" style="width: 41px; height: 41px; padding-right: 10px;">
+                
+                <li><a href="/">Homepage</a></li>
+                <li><a href="/sportsschedule">Sports Schedule</a></li>
+                <!-- Profile Section -->
+            </ul>    
+            <div class="right-section">
+                <% if(user) { %>
+                    <li class="logout-link"><a href="/auth/logout">Logout</a></li>
+                <% } else { %>
+                    <li class="logout-link"><a href="/auth/login">Login</a></li>
+                <% } %>
+                <div class="profile-section">
+                    <h1 class="school-name">ST. MARK'S SCHOOL</h1>
+                    <div class="profile-container">
+                        <img src="<%= user.thumbnail %>" alt="Profile Image" class="profile-img">
+                        <div class="username-hover">
+                            <span class="username-tooltip"><%= user.username %></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <main>
+            <div id="header">
+                <h1>
+                    Sports Schedule             
+                </h1>
+            </div>
+            <div id="inputdiv">
+                <div id="buttondiv">
+                    <input type="button" id="preset" value="Load Preset" onclick ="loadPreset()" />
+                    <input type="button" id="preview" value="Preview" onclick ="preview()" />
+                    <input type="button" id="save" value="Save" onclick ="send()" />
+                </div>
+                <div id="selectiondiv">
+                    <select id="sport">
+                        <option disabled selected value>-- Select a Sport --</option>
+                        <option value='tennis'>Tennis</option>
+                        <option value='lacrosse'>Lacrosse</button>
+                        <option value='baseball'>Baseball</option>
+                        <option value='softball'>Softball</option> 
+                        <option value='crew'>Crew</option> 
+                        <option value='golf'>Golf</option> 
+                        <option value='yoga'>Yoga</option>
+                        <option value='fit'>FIT</option>
+                        <option value='sc'>S&C</option>
+                        <option value='dance'>Dance</option>
+                    </select>
+                </div>
+                <br>
+                <br>
+                <div id="schedulediv">
+                    <form id="input" action=test.html>
+                        <table id="calendarTable">
+                            <thead>
+                                <tr id="weekday">
+                                    <th>Sport</th>
+                                    <th>Mon</th>
+                                    <th>Tue</th>
+                                    <th>Wed</th>
+                                    <th>Thu</th>
+                                    <th>Fri</th>
+                                    <th>Sat</th>
+                                </tr>
+                            </thead>
+                            <tbody id="calendarBody"></tbody>
+                            
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <script src="script.js"></script>
+        </main>
+    </body>
+</html>
